@@ -16,3 +16,6 @@ def upload_file(request):
     else:
         form = UploadFileForm()
     return render(request, 'uploader.html', {'form': form})
+
+def download_file(request):
+    return render(request,'downloader.html')
