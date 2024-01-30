@@ -1,0 +1,15 @@
+<form method="post" enctype="multipart/form-data">
+    
+    <div class="dropdown">
+        <button class="dropbtn">Dropdown</button>
+        <div class="dropdown-content">
+            {% csrf_token %}
+            {{ form.as_p }}
+          <a href="/upload">Upload</a>
+          <a href="/">Home</a>
+          <!-- <a href="/downl">Link 3</a> -->
+        </div>
+      </div>
+    <!-- <button type="submit">Upload</button> -->
+    <p>This is our downloader page :D</p>
+</form>
