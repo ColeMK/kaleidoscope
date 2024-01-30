@@ -107,8 +107,8 @@ if __name__ == "__main__":
     opt.dataroot = video_folder
 
     original_folder, stylized_folder, sound_path = split_video(video_path, video_folder)
-    stylize_images(original_folder, stylized_folder, style, opt)
-    stylized_video_path = sew_video(stylized_folder, sound_path, stylized_video_path)
+    #stylize_images(original_folder, stylized_folder, style, opt)
+    #stylized_video_path = sew_video(stylized_folder, sound_path, stylized_video_path)
 
     # print(f"Video Saved at {stylized_video_path} in style of {style}")
 
