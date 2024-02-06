@@ -1,5 +1,4 @@
 from django.test import TestCase
-import requests
 from datetime import datetime
 
 # Create your tests here.
