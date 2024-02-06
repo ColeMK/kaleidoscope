@@ -3,6 +3,7 @@ import os
 import shutil
 import cv2
 from torch.utils.data import DataLoader
+from torchvision.utils import save_image
 from moviepy.editor import VideoFileClip, ImageSequenceClip, AudioFileClip
 
 from options.test_options import TestOptions
@@ -27,9 +28,13 @@ def split_video(video_path, video_folder):
         os.makedirs(stylized_folder)
     else:
         shutil.rmtree(video_folder)
+        os.makedirs(video_folder)
+        os.makedirs(original_folder)
+        os.makedirs(stylized_folder)
 
     # Open the video
     cap = cv2.VideoCapture(video_path)
+    fps = cap.get(cv2.CAP_PROP_FPS)
 
     if not cap.isOpened():
         print("Error: Could not open video.")
@@ -61,18 +66,18 @@ def split_video(video_path, video_folder):
 
 def stylize_images(original_folder, stylized_folder, style, opt):
     dataset = VideoDataset(original_folder, crop=[256, 256], resize=[286, 286])
-    frame_loader = DataLoader(dataset, shuffle=False, batch_size=1)
+    frame_loader = DataLoader(dataset, shuffle=False, batch_size=1) 
 
-    model = create_model(opt)
-    model.setup(opt)   
+    model = create_model(opt)      # create a model given opt.model and other options
+    model.setup(opt)               # regular setup: load and print networks; create schedulers
 
     for i, data in enumerate(frame_loader):
+        print(f"Style transfering frame {i}")
         model.set_input(data)
-        stylized_frame = model.forward(test=True)
-        print(stylized_frame)
-
-
-
+        stylized_frame = model.forward()
+        stylized_frame = stylized_frame.detach()
+        save_image(stylized_frame, os.path.join(stylized_folder, f"{i}.png"))
+        #print(stylized_frame)
 
 
 def sew_video(stylized_folder, audio_path, fps, stylized_video_path):
@@ -98,17 +103,30 @@ def sew_video(stylized_folder, audio_path, fps, stylized_video_path):
     video_with_audio.write_videofile(stylized_video_path, codec='libx264', audio_codec='aac')
 
 if __name__ == "__main__":
-    opt = TestOptions().parse()
-
-    style = "style_monet_pretrained"
+    style = "style_vangogh_pretrained"
     video_path = "/home/jwstoneb/kaleidoscope/Video_Transformation/Model/datasets/video/slap_of_god.mp4"
     video_folder = video_path[:-4] + style
     stylized_video_path = f"{video_path[:-4]}_{style}.mp4"
+    
+    opt = TestOptions().parse()
+    opt.num_threads = 0   # test code only supports num_threads = 0
+    opt.batch_size = 1    # test code only supports batch_size = 1
+    opt.serial_batches = True  # disable data shuffling; comment this line if results on randomly chosen images are needed.
+    opt.no_flip = True    # no flip; comment this line if results on flipped images are needed.
+    opt.display_id = -1
+    opt.no_dropout = True
     opt.dataroot = video_folder
+    opt.name = style 
+    opt.gpu_ids = [] #TODO: Make this utilize the gpu
 
-    original_folder, stylized_folder, sound_path = split_video(video_path, video_folder)
+    #original_folder, stylized_folder, sound_path = split_video(video_path, video_folder)
+
     #stylize_images(original_folder, stylized_folder, style, opt)
-    #stylized_video_path = sew_video(stylized_folder, sound_path, stylized_video_path)
+
+    stylized_folder = "/home/jwstoneb/kaleidoscope/Video_Transformation/Model/datasets/video/slap_of_godstyle_vangogh_pretrained/stylized"
+    sound_path = "/home/jwstoneb/kaleidoscope/Video_Transformation/Model/datasets/video/slap_of_godstyle_vangogh_pretrained/audio.wav"
+    fps = 24
+    sew_video(stylized_folder, sound_path, fps, stylized_video_path)
 
     # print(f"Video Saved at {stylized_video_path} in style of {style}")
 

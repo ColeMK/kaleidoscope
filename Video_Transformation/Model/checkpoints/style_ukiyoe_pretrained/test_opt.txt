@@ -3,7 +3,7 @@
                batch_size: 1                             
           checkpoints_dir: ./checkpoints                 
                 crop_size: 256                           
-                 dataroot: datasets/video/slap_of_godstyle_monet_pretrained/original	[default: None]
+                 dataroot: datasets/video/slap_of_god/original	[default: None]
              dataset_mode: single                        
                 direction: AtoB                          
           display_winsize: 256                           

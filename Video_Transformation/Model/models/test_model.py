@@ -60,9 +60,12 @@ class TestModel(BaseModel):
         self.real = input['A'].to(self.device)
         self.image_paths = input['A_paths']
 
-    def forward(self):
+    def forward(self, ret=True):
         """Run forward pass."""
         self.fake = self.netG(self.real)  # G(real)
+
+        if ret:
+            return self.fake
 
     def optimize_parameters(self):
         """No optimization for test model."""

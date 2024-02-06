@@ -122,14 +122,12 @@ class VideoDataset(Dataset):
                 self.frame_paths.append(os.path.join(root, name))
 
         #define transformation
-        self.transformation = None
-        transform_list = []
+        transform_list = [transforms.ToTensor()]
         if resize:
             transform_list.append(transforms.Resize(resize, transforms.InterpolationMode.BICUBIC))
         if crop:
             transform_list.append(transforms.CenterCrop(crop))
-        if len(transform_list) > 0:
-            self.transformation = transforms.Compose(transform_list) 
+        self.transformation = transforms.Compose(transform_list) 
         
 
 
