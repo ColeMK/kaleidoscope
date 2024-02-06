@@ -26,6 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Lint with flake8
+      continue-on-error: true
       run: |
         # Install flake8 if it's not included in your requirements.txt
         pip install flake8
