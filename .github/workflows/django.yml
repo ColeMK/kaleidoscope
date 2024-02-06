@@ -34,5 +34,6 @@ jobs:
         source: "web/kaleidoscope"
         mypy-options: "--show-error-codes --ignore-missing-imports"
         isort-options: "-w 100"
+        black-options: "--exclude *"
         django: true
         strict: "low"
