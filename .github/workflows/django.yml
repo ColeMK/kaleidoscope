@@ -25,6 +25,13 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+    - name: Lint with flake8
+      run: |
+        # Install flake8 if it's not included in your requirements.txt
+        pip install flake8
+        # Run flake8 on the project directory
+        flake8 web/kaleidoscope/ --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 web/kaleidoscope/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Run Tests
       run: |
         python web/kaleidoscope/manage.py test tests
