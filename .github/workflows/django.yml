@@ -2,7 +2,7 @@ name: Django CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "*" ]
   pull_request:
     branches: [ "main" ]
 
@@ -27,12 +27,11 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        python web/kaleidoscope/manage.py test
-    - name: Linter
-      uses: sunnysid3up/python-linter@master
-      with:
-        source: "web/kaleidoscope"
-        mypy-options: "--show-error-codes --ignore-missing-imports"
-        isort-options: "-w 100"
-        django: true
-        strict: "low"
+        python web/kaleidoscope/manage.py test tests
+    - name: Lint with flake8
+      run: |
+        # Install flake8 if it's not included in your requirements.txt
+        pip install flake8
+        # Run flake8 on the project directory
+        flake8 web/kaleidoscope/ --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 web/kaleidoscope/ --count --max-complexity=10 --max-line-length=127 --statistics
