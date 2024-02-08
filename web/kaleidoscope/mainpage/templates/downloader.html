@@ -1,8 +1,10 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
 <form method="post" enctype="multipart/form-data">
     
     <div class="dropdown">
         <button class="dropbtn">Dropdown</button>
-        <div class="dropdown-content">
+        <div class="topbar">
             {% csrf_token %}
             {{ form.as_p }}
           <a href="/upload">Upload</a>
