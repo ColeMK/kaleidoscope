@@ -11,7 +11,7 @@ from kaleidoscope import settings
 download_folder = os.path.join(settings.BASE_DIR, '/mainpage/downloads/')
 
 def mainpage(request):
-    return HttpResponse("Hello, world. You're at the mainpage")
+    return render(request, 'mainpage.html')
 
 def upload_file(request):
     if request.method == 'POST':
