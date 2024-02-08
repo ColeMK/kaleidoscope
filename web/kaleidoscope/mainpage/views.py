@@ -17,7 +17,7 @@ download_folder = os.path.join(settings.BASE_DIR, '/mainpage/downloads/')
 model_path = "../../Video_Transformation/Model/checkpoints/style_vangogh_pretrained/latest_net_G.pth"
 
 def mainpage(request):
-    return HttpResponse("Hello, world. You're at the mainpage")
+    return render(request, 'mainpage.html')
 
 def upload_file(request):
     if request.method == 'POST':
