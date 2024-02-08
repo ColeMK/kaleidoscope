@@ -7,8 +7,14 @@ from django.urls import reverse
 import os
 from .form import UploadFileForm
 from kaleidoscope import settings
+import threading
+
+import sys
+sys.path.append('../../Video_Transformation/Model/')
+from process_video import stylize_video
 
 download_folder = os.path.join(settings.BASE_DIR, '/mainpage/downloads/')
+model_path = "../../Video_Transformation/Model/checkpoints/style_vangogh_pretrained/latest_net_G.pth"
 
 def mainpage(request):
     return HttpResponse("Hello, world. You're at the mainpage")
@@ -18,6 +24,11 @@ def upload_file(request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()  # Saves the file to the specified upload directory
+            #print(f"Form: {form}, Request: {request.FILES['file']}")
+            file_path = f"../uploads/{request.FILES['file']}"
+            ml_thread = threading.Thread(target=stylize_video,args=(file_path, model_path))
+            ml_thread.start()  # Start the thread
+            
             return redirect('upload')  # Redirect to a success page
     else:
         form = UploadFileForm()
