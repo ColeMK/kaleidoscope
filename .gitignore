@@ -54,6 +54,10 @@ cover/
 *.mo
 *.pot
 
+# Data
+Video_Transformation/Model/checkpoints
+Video_Transformation/Model/datasets/video
+
 # Django stuff:
 *.log
 local_settings.py
