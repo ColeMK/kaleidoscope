@@ -5,6 +5,8 @@ import cv2
 from torch.utils.data import DataLoader
 from moviepy.editor import VideoFileClip, ImageSequenceClip, AudioFileClip
 import argparse
+import json
+
 from options.test_options import TestOptions
 from models import create_model
 from data import VideoDataset
@@ -126,22 +128,9 @@ def stylize_video(video_path, style):
     video_folder = video_path[:-4] + "_" + style
     stylized_video_path = f"{video_path[:-4]}_{style}.mp4"
     
-    opt = TestOptions()
-    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser = opt.initialize(parser)
-    opt, _ = parser.parse_known_args()
-    # dataset_name = opt.dataset_mode
-    # dataset_option_setter = data.get_option_setter(dataset_name)
-    # parser = dataset_option_setter(parser, opt.isTrain)
-    opt.num_threads = 0   # test code only supports num_threads = 0
-    opt.batch_size = 1    # test code only supports batch_size = 1
-    opt.serial_batches = True  # disable data shuffling; comment this line if results on randomly chosen images are needed.
-    opt.no_flip = True    # no flip; comment this line if results on flipped images are needed.
-    opt.display_id = -1
-    opt.no_dropout = True
+    opt = load_config("config.json")
     opt.dataroot = video_folder
     opt.name = style 
-    opt.gpu_ids = [] #TODO: Make this utilize the gpu
 
     original_folder, stylized_folder, sound_path, fps = split_video(video_path, video_folder)
 
@@ -151,6 +140,27 @@ def stylize_video(video_path, style):
 
     print(f"Video Saved at {stylized_video_path}")
 
+
+def save_arparser_json(opt, json_file_path):
+    args_dict = vars(opt)
+
+    # Save the dictionary as JSON
+    json_file_path = 'args.json'  # Specify your file path here
+    with open(json_file_path, 'w') as json_file:
+        json.dump(args_dict, json_file, indent=4)
+
+    print(f"Arguments saved to {json_file_path}:")
+    print(json.dumps(args_dict, indent=4))
+
+def load_config(config_path):
+    # Read the JSON file into a dictionary
+    with open(config_path, 'r') as json_file:
+        config_dict = json.load(json_file)
+
+    # Convert the dictionary to an argparse.Namespace object
+    config = argparse.Namespace(**config_dict)
+
+    return config
 
 if __name__ == "__main__":
     style = "style_monet_pretrained"
