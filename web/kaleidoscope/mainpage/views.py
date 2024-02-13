@@ -10,11 +10,11 @@ from kaleidoscope import settings
 import threading
 
 import sys
-sys.path.append('../../Video_Transformation/Model/')
+sys.path.append('ML/')
 from process_video import stylize_video
 
 download_folder = os.path.join(settings.BASE_DIR, '/mainpage/downloads/')
-model_path = "../../Video_Transformation/Model/checkpoints/style_vangogh_pretrained/latest_net_G.pth"
+model_path = "style_vangogh_pretrained"
 
 def mainpage(request):
     return render(request, 'mainpage.html')
@@ -25,7 +25,8 @@ def upload_file(request):
         if form.is_valid():
             form.save()  # Saves the file to the specified upload directory
             #print(f"Form: {form}, Request: {request.FILES['file']}")
-            file_path = f"../uploads/{request.FILES['file']}"
+            file_path = f"uploads/{request.FILES['file']}"
+            #stylize_video(file_path, model_path)
             ml_thread = threading.Thread(target=stylize_video,args=(file_path, model_path))
             ml_thread.start()  # Start the thread
             

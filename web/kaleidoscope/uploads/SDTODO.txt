@@ -1,4 +1,0 @@
-Next Steps:
-
-Test Download Button to see if it works for videos
-Move to upload area to only allow mp4 types in for now and possible size requirement.
