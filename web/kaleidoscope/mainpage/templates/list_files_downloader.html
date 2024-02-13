@@ -1,0 +1,10 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'styles.css' %}">
+<div class="topbar">
+    <a href="/">Home</a>
+    <a href="/upload">Upload</a>
+    <a href="/logout">Logout</a>
+</div>
+{% for file in files %}
+    <a href="{% url 'download_file' file %}" download>{{ file }}</a><br>
+{% endfor %}
