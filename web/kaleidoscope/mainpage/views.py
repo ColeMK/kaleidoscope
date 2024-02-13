@@ -19,6 +19,7 @@ model_path = "style_vangogh_pretrained"
 def mainpage(request):
     return render(request, 'mainpage.html')
 
+
 def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
@@ -26,8 +27,9 @@ def upload_file(request):
             form.save()  # Saves the file to the specified upload directory
             #print(f"Form: {form}, Request: {request.FILES['file']}")
             file_path = f"uploads/{request.FILES['file']}"
+            save_path = f"{download_folder}{request.FILES['file']}_{model_path}.mp4"
             #stylize_video(file_path, model_path)
-            ml_thread = threading.Thread(target=stylize_video,args=(file_path, model_path))
+            ml_thread = threading.Thread(target=stylize_video,args=(file_path, save_path, model_path))
             ml_thread.start()  # Start the thread
             
             return redirect('upload')  # Redirect to a success page

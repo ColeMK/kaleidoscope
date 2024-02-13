@@ -127,7 +127,7 @@ def sew_video(stylized_folder, audio_path, fps, stylized_video_path):
 def stylize_video(video_path, stylized_video_path, style):
     video_folder = video_path[:-4] + "_" + style
     
-    opt = load_config("config.json")
+    opt = load_config("ML/config.json")
     opt.dataroot = video_folder
     opt.name = style 
 
