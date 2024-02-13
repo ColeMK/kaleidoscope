@@ -86,7 +86,7 @@ def stylize_images(original_folder, stylized_folder, style, opt):
         model.set_input(data)
         stylized_frame = model.forward() #get the stylized frame
         stylized_frame = tensor2im(stylized_frame) #Convert Tensor to Numpy
-        save_image(stylized_frame, os.path.join(stylized_folder, f"{frame_num}.png"), opt.aspect_ratio) 
+        save_image(stylized_frame, os.path.join(stylized_folder, f"{frame_num}.png"), opt.aspect_ratio) #preprocess and save
 
 
 def sew_video(stylized_folder, audio_path, fps, stylized_video_path):
