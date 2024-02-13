@@ -124,9 +124,8 @@ def sew_video(stylized_folder, audio_path, fps, stylized_video_path):
     # Write the result to a file
     video_with_audio.write_videofile(stylized_video_path)
 
-def stylize_video(video_path, style):
+def stylize_video(video_path, stylized_video_path, style):
     video_folder = video_path[:-4] + "_" + style
-    stylized_video_path = f"{video_path[:-4]}_{style}.mp4"
     
     opt = load_config("config.json")
     opt.dataroot = video_folder
@@ -137,6 +136,7 @@ def stylize_video(video_path, style):
     stylize_images(original_folder, stylized_folder, style, opt)
 
     sew_video(stylized_folder, sound_path, fps, stylized_video_path)
+    shutil.rmtree(video_folder)
 
     print(f"Video Saved at {stylized_video_path}")
 
