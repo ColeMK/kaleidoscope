@@ -122,7 +122,7 @@ def sew_video(stylized_folder, audio_path, fps, stylized_video_path):
     video_with_audio.write_videofile(stylized_video_path)
 
 if __name__ == "__main__":
-    style = "style_vangogh_pretrained"
+    style = "style_monet_pretrained"
     video_path = "/home/jwstoneb/kaleidoscope/Video_Transformation/Model/datasets/video/zoolander.mp4"
     video_folder = video_path[:-4] + "_" + style
     stylized_video_path = f"{video_path[:-4]}_{style}.mp4"
