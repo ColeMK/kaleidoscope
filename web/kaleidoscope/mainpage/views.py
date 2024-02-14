@@ -27,7 +27,8 @@ def upload_file(request):
             form.save()  # Saves the file to the specified upload directory
             #print(f"Form: {form}, Request: {request.FILES['file']}")
             file_path = f"uploads/{request.FILES['file']}"
-            save_path = f"{download_folder}{request.FILES['file']}_{model_path}.mp4"
+            save_path = f"{download_folder}{str(request.FILES['file'])[:-4]}_{model_path}.mp4"
+            print(save_path)
             #stylize_video(file_path, model_path)
             ml_thread = threading.Thread(target=stylize_video,args=(file_path, save_path, model_path))
             ml_thread.start()  # Start the thread
