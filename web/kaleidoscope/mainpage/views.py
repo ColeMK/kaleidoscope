@@ -13,7 +13,8 @@ import sys
 sys.path.append('ML/')
 from process_video import stylize_video
 
-download_folder = os.path.join(settings.BASE_DIR, '/mainpage/downloads/')
+download_folder = str(settings.BASE_DIR)+ '/mainpage/downloads/'
+print(f"Download Folder: {download_folder}")
 model_path = "style_vangogh_pretrained"
 
 def mainpage(request):
