@@ -41,6 +41,7 @@ def split_video(video_path, video_folder):
         os.makedirs(stylized_folder)
     print("before cap")
     # Open the video
+    print(video_path)
     cap = cv2.VideoCapture(video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
 
@@ -131,11 +132,20 @@ def stylize_video(video_path, stylized_video_path, style):
     opt.dataroot = video_folder
     opt.name = style 
 
-    original_folder, stylized_folder, sound_path, fps = split_video(video_path, video_folder)
+    try:
+        original_folder, stylized_folder, sound_path, fps = split_video(video_path, video_folder)
+    except Exception:
+        print(f"Error spliting video at {video_path}")
+        raise Exception
 
     stylize_images(original_folder, stylized_folder, style, opt)
 
-    sew_video(stylized_folder, sound_path, fps, stylized_video_path)
+    try:
+        sew_video(stylized_folder, sound_path, fps, stylized_video_path)
+    except Exception:
+        print(f"Error saving video at {stylized_video_path}")
+        raise Exception
+
     shutil.rmtree(video_folder)
 
     print(f"Video Saved at {stylized_video_path}")
