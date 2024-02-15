@@ -1,6 +1,6 @@
 
 #video
-web/kaleidoscope/downloads/.*
+web/kaleidoscope/downloads/*
 web/kaleidoscope/uploads/*
 
 #environment
