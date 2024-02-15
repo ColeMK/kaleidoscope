@@ -28,11 +28,11 @@ def upload_file(request):
             form.save()  # Saves the file to the specified upload directory
             file_name = str(request.FILES['file'])[:-4].replace(" ", "_")
             uploaded_video_path = f"{settings.UPLOADS_DIR}{file_name}.mp4"
-            stylized_video_path = f"{str(settings.DOWNLOADS_DIR)}{file_name}.mp4"
+            stylized_video_path = f"{str(settings.DOWNLOADS_DIR)}{file_name}_{model_path}.mp4"
 
-            stylize_video(uploaded_video_path, stylized_video_path, model_path)
-            # ml_thread = threading.Thread(target=stylize_video,args=(uploaded_video_path, stylized_video_path, model_path))
-            # ml_thread.start()  # Start the thread
+            # stylize_video(uploaded_video_path, stylized_video_path, model_path)
+            ml_thread = threading.Thread(target=stylize_video,args=(uploaded_video_path, stylized_video_path, model_path))
+            ml_thread.start()  # Start the thread
             
             return redirect('upload')  # Redirect to a success page
     else:
