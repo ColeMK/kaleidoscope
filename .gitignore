@@ -1,6 +1,7 @@
 
 #video
 web/kaleidoscope/downloads/*
+!foldername/.gitkeep
 web/kaleidoscope/uploads/*
 
 #environment
