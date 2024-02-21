@@ -11,7 +11,7 @@ import threading
 
 import sys
 sys.path.append('ML/')
-from process_video import stylize_video
+#from process_video import stylize_video
 
 download_folder = str(settings.BASE_DIR)+ '/mainpage/downloads/'
 print(f"Download Folder: {download_folder}")
