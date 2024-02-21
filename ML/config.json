@@ -2,7 +2,7 @@
     "dataroot": null,
     "name": "experiment_name",
     "gpu_ids": [], 
-    "checkpoints_dir": "ML/checkpoints",
+    "checkpoints_dir": "checkpoints",
     "model": "test",
     "input_nc": 3,
     "output_nc": 3,
