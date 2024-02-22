@@ -3,8 +3,9 @@ import sqlite3
 import os
 from pathlib import Path
 def main():
-    upload_path = str(os.path.dirname(os.getcwd()))+"/web/kaleidoscope/uploads/"
-    dowload_folder = str(os.path.dirname(os.getcwd()))+"/web/kaleidoscope/downloads/"
+    print("meow")
+    upload_path = str(os.path.dirname(os.getcwd()))+"web/kaleidoscope/uploads/"
+    dowload_folder = str(os.path.dirname(os.getcwd()))+"web/kaleidoscope/downloads/"
     model_path = "style_ukiyoe_pretrained"
     database = "../web/kaleidoscope/db.sqlite3"
 
