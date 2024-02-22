@@ -1,12 +1,36 @@
+<!DOCTYPE html>
 {% load static %}
-<link rel="stylesheet" href="{% static 'styles.css' %}">
-<form method="post" enctype="multipart/form-data">
-    <!-- {{ form.as_p }} -->
-    {% csrf_token %}
-    <div class="topbar">
-        <a href="/upload">Upload</a>
-        <a href="/download">Download</a>
-        <a href="/logout">Logout</a>
-    </div>
-    Hello World from the Mainpage
-</form>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mainpage</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="content">
+            <img src="{% static 'Kaleidoscope.png' %}" alt="KaleidoscopeImg" id="kscope">
+            <div class="options" id="options">
+                <a href="/upload">Upload</a>
+                <a href="/download">Download</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div>
+        <script>
+            document.getElementById('kscope').addEventListener('click', function(event) {
+                var optionsContainer = document.getElementById('options');
+                if (optionsContainer.style.display === 'block') {
+                    optionsContainer.style.display = 'none';
+                } else {
+                    optionsContainer.style.position = 'fixed';
+                    optionsContainer.style.display = 'block';
+                    optionsContainer.style.left = event.clientX + 'px';
+                    optionsContainer.style.top = event.clientY + 'px';
+                }
+            });
+        </script>
+    </form>
+</body>
+</html>

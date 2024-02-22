@@ -1,4 +1,54 @@
-.topbar{
-    background-color: #b8b8b8;
-    overflow: hidden;
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background: #0D3257;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.content img {
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 0;
+}
+
+.options {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 1; /* Set z-index to make it appear on top */
+}
+
+.options a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.options a:hover {
+    background-color: #f0f0f0;
+}
+

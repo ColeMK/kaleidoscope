@@ -61,3 +61,6 @@ def list_files(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download fil
     files = os.listdir(folder_path)
     context = {'files': files}
     return render(request, 'list_files_downloader.html', context)
+
+def logout(request):
+    return(render(request,'error.html'))
