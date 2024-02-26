@@ -74,17 +74,57 @@ form {
     margin-left: 78%
 }
 
+.topbar a:hover{
+    color: #000000;
+}
+
 .logo {
     margin-right: 10px; /* Adjust spacing between logo and links */
     max-width: 100px; /* Set maximum width for the logo */
     max-height: 100%; /* Set maximum height for the logo */
 }
 
-.downloads-container{
+.uploads-container {
+    background-color: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.upload-submit {
+    margin-bottom: 20px;
+}
+
+.submit-btn {
     display: flex;
-    align-items: left;
-    justify-content: top;
-    height: 100%;
-    flex:  1;
+    justify-content: center;
+}
+
+.downloads-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 90%; /* Adjusted height to take up most of the page */
+    Width: 90%;
+    flex: 1;
     margin-top: 10px;
+    background-color: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.downloads-container a {
+    display: inline-block; /* Display links as block elements */
+    margin-bottom: 10px; /* Space between links */
+    padding: 5px 10px; /* Add padding for better appearance */
+    color: #333; /* Text color */
+    text-decoration: none;
+}
+
+.downloads-container a:hover {
+    text-decoration: underline;
 }

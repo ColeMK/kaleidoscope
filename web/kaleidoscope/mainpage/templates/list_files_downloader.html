@@ -15,6 +15,7 @@
 </div>
 <body>
     <div class="downloads-container">
+        Your Video Collection:
         {% for file in files %}
         <a href="{% url 'download_file' file %}" download>{{ file }}</a><br>
         {% endfor %}
