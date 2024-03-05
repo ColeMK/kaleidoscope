@@ -11,7 +11,7 @@ import threading
 
 import sys
 sys.path.append('ML/')
-from process_video import stylize_video
+#from process_video import stylize_video
 
 download_folder = str(settings.BASE_DIR)+ '/mainpage/downloads/'
 print(f"Download Folder: {download_folder}")
@@ -29,10 +29,9 @@ def upload_file(request):
             file_name = str(request.FILES['file'])[:-4].replace(" ", "_")
             uploaded_video_path = f"{settings.UPLOADS_DIR}{file_name}.mp4"
             stylized_video_path = f"{str(settings.DOWNLOADS_DIR)}{file_name}_{model_path}.mp4"
-
             # stylize_video(uploaded_video_path, stylized_video_path, model_path)
-            ml_thread = threading.Thread(target=stylize_video,args=(uploaded_video_path, stylized_video_path, model_path))
-            ml_thread.start()  # Start the thread
+            # ml_thread = threading.Thread(target=stylize_video,args=(uploaded_video_path, stylized_video_path, model_path))
+            # ml_thread.start()  # Start the thread
             
             return redirect('upload')  # Redirect to a success page
     else:
@@ -62,3 +61,6 @@ def list_files(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download fil
     files = os.listdir(folder_path)
     context = {'files': files}
     return render(request, 'list_files_downloader.html', context)
+
+def logout(request):
+    return(render(request,'error.html'))

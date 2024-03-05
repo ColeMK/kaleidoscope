@@ -8,4 +8,5 @@ urlpatterns = [
     #path('download',views.list_files,name='download'),
     path('download/<str:filename>', views.download_file, name='download_file'),
     path('download/', views.list_files, name='list_files'),
+    path('logout/',views.logout,name="logout"),
 ]

@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  django:
+    image: webserver
+    volumes:
+      - ./web/kaleidoscope:/kaleidoscope
+    build: ./web/kaleidoscope
+    #command: python manage.py runserver
+    ports:
+      - "8000:8000"
+  machinelearning:
+    image: ml
+    volumes:
+      - ./web/kaleidoscope:/web/kaleidoscope
+    build: ./ML
+
+#run with 
+#docker compose up --build
