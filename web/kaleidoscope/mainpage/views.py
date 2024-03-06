@@ -8,6 +8,8 @@ import os
 from .form import UploadFileForm
 from kaleidoscope import settings
 import threading
+import config
+import pyrebase
 
 import sys
 sys.path.append('ML/')
@@ -16,6 +18,11 @@ sys.path.append('ML/')
 download_folder = str(settings.BASE_DIR)+ '/mainpage/downloads/'
 print(f"Download Folder: {download_folder}")
 model_path = "style_ukiyoe_pretrained"
+
+configs = config.configUtils()
+firebase = pyrebase.initialize_app(configs)
+authe = firebase.auth()
+database = firebase.database()
 
 def mainpage(request):
     return render(request, 'mainpage.html')
@@ -64,3 +71,20 @@ def list_files(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download fil
 
 def logout(request):
     return(render(request,'error.html'))
+
+def login(request):
+    return(render(request,"login.html"))
+
+def signin_wait(request):
+    email=request.POST.get('email')
+    passw = request.POST.get('pass')
+    try:
+        user=authe.sign_in_with_email_and_password(email,passw)
+    except:
+        invalid="Sorry, your credentials could not be matched."
+        return render(request,"login.html",{"invalid":invalid})
+
+    session_id=user['idToken']
+    request.session['uid']=str(session_id)
+    return(request,'mainpage.html')
+

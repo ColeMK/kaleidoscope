@@ -15,4 +15,6 @@ db.sqlite3-journal
 
 ML/__pycache__
 
+web/kaleidoscope/mainpage/config.py
+
 
