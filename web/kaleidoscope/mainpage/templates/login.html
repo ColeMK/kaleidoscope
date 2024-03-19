@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+{% csrf_token %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        <div class="login-container">
+            <img src="{% static 'Kaleidoscope-nobackground.png' %}" alt="Logo" class="login-logo">
+            <div class="form-group">
+                <input type="username" id="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <div class="login-btn">
+                <button type="submit">Login</button>
+            </div>
+        </div>
+    </form>
+</body>
