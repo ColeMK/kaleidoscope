@@ -1,8 +1,8 @@
-version: '3.9'
+version: '3'
 
 services:
   django:
-    image: webserver
+    image: colemk/webserver:webserver
     volumes:
       - ./web/kaleidoscope:/kaleidoscope
     build: ./web/kaleidoscope

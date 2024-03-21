@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: django
+  name: django
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: django
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: django
+    spec:
+      containers:
+        - image: colemk/webserver:webserver
+          name: django
+          ports:
+            - containerPort: 8000
+          resources: {}
+          volumeMounts:
+            - mountPath: /kaleidoscope
+              name: django-claim0
+      restartPolicy: Always
+      volumes:
+        - name: django-claim0
+          persistentVolumeClaim:
+            claimName: django-claim0
+status: {}
