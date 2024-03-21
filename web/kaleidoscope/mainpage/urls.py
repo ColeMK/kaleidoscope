@@ -10,4 +10,5 @@ urlpatterns = [
     path('download/', views.list_files, name='list_files'),
     path('logout/',views.logout,name="logout"),
     path('login/',views.login,name="login"),
+    path('signin_wait/',views.signin_wait,name="signin_wait"),
 ]

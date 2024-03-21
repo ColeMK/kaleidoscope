@@ -25,6 +25,7 @@ model_path = "style_ukiyoe_pretrained"
 # database = firebase.database()
 
 def mainpage(request):
+    print(request.session['uid'])
     return render(request, 'mainpage.html')
 
 
@@ -76,15 +77,16 @@ def login(request):
     return(render(request,"login.html"))
 
 def signin_wait(request):
-    email=request.POST.get('email')
+    email = request.POST.get('email')
     passw = request.POST.get('pass')
+
     try:
         user=authe.sign_in_with_email_and_password(email,passw)
     except:
         invalid="Sorry, your credentials could not be matched."
-        return render(request,"login.html",{"invalid":invalid})
+        return render(request,"login.html",{"message":invalid})
 
     session_id=user['idToken']
     request.session['uid']=str(session_id)
-    return(request,'mainpage.html')
+    return redirect("mainpage")
 

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load static %}
-{% csrf_token %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,15 +7,21 @@
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
 </head>
+{% if message %}
+<script>
+    alert('{{ message }}');
+</script>
+{% endif %}
 <body>
-    <form method="post" enctype="multipart/form-data">
+    <form action="/signin_wait/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="login-container">
             <img src="{% static 'Kaleidoscope-nobackground.png' %}" alt="Logo" class="login-logo">
             <div class="form-group">
-                <input type="username" id="username" placeholder="Username" required>
+                <input type="text" id="email" placeholder="Username" required>
             </div>
             <div class="form-group">
-                <input type="password" id="password" placeholder="Password" required>
+                <input type="password" id="pass" placeholder="Password" required>
             </div>
             <div class="login-btn">
                 <button type="submit">Login</button>
