@@ -8,8 +8,8 @@ import os
 from .form import UploadFileForm
 from kaleidoscope import settings
 import threading
-# from mainpage import config
-# import pyrebase
+from mainpage import config
+import pyrebase
 
 import sys
 sys.path.append('ML/')
@@ -19,13 +19,12 @@ download_folder = str(settings.BASE_DIR)+ '/mainpage/downloads/'
 print(f"Download Folder: {download_folder}")
 model_path = "style_ukiyoe_pretrained"
 
-# configs = configUtils()
-# firebase = pyrebase.initialize_app(configs)
-# authe = firebase.auth()
-# database = firebase.database()
+configs = config.configUtils()
+firebase = pyrebase.initialize_app(configs)
+authe = firebase.auth()
+database = firebase.database()
 
 def mainpage(request):
-    print(request.session['uid'])
     return render(request, 'mainpage.html')
 
 
@@ -79,7 +78,6 @@ def login(request):
 def signin_wait(request):
     email = request.POST.get('email')
     passw = request.POST.get('pass')
-
     try:
         user=authe.sign_in_with_email_and_password(email,passw)
     except:
