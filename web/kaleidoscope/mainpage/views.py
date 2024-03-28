@@ -4,10 +4,13 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.http import HttpResponse, FileResponse
 from django.urls import reverse
+from django.contrib import messages
 import os
 from .form import UploadFileForm
 from kaleidoscope import settings
 import threading
+from mainpage import config
+import pyrebase
 
 import sys
 sys.path.append('ML/')
@@ -17,11 +20,24 @@ download_folder = str(settings.BASE_DIR)+ '/mainpage/downloads/'
 print(f"Download Folder: {download_folder}")
 model_path = "style_ukiyoe_pretrained"
 
+configs = config.configUtils()
+firebase = pyrebase.initialize_app(configs)
+authe = firebase.auth()
+database = firebase.database()
+
 def mainpage(request):
+    if('uid' not in request.session):
+        needslogin = "Error: You Must Be Logged In to Access This Page."
+        messages.info(request,needslogin)
+        return redirect("login")
     return render(request, 'mainpage.html')
 
 
 def upload_file(request):
+    if('uid' not in request.session):
+        needslogin = "Error: You Must Be Logged In to Access This Page."
+        messages.info(request,needslogin)
+        return redirect("login")
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -43,6 +59,10 @@ def upload_file(request):
   
 
 def download_file(request, filename):
+    if('uid' not in request.session):
+        needslogin = "Error: You Must Be Logged In to Access This Page."
+        messages.info(request,needslogin)
+        return redirect("login")
     print(type(settings.DOWNLOADS_DIR))
     folder_path = str(settings.DOWNLOADS_DIR)  # Replace with actual path
     file_path = os.path.join(folder_path, filename)
@@ -57,10 +77,53 @@ def download_file(request, filename):
         return HttpResponse("File not found", status=404)
 
 def list_files(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download file, we can change if wanted
+    if('uid' not in request.session):
+        needslogin = "Error: You Must Be Logged In to Access This Page."
+        messages.info(request,needslogin)
+        return redirect("login")
     folder_path = str(settings.DOWNLOADS_DIR)
     files = os.listdir(folder_path)
     context = {'files': files}
     return render(request, 'list_files_downloader.html', context)
 
 def logout(request):
-    return(render(request,'error.html'))
+    try:
+        del request.session['uid']
+        logoutmessage = "You Have Logged Out."
+    except:
+        logoutmessage = "ERROR: There was an issue with your logout."
+    messages.info(request,logoutmessage)
+    return redirect("login")
+
+def login(request):
+    return(render(request,"login.html"))
+
+def signin_wait(request):
+    email = request.POST.get('email')
+    passw = request.POST.get('pass')
+    try:
+        user=authe.sign_in_with_email_and_password(email,passw)
+    except:
+        invalid="Sorry, your credentials could not be matched."
+        return render(request,"login.html",{"message":invalid})
+
+    session_id=user['idToken']
+    request.session['uid']=str(session_id)
+    return redirect("mainpage")
+
+def create_acc_page(request):
+    return(render(request,"create_account.html"))
+
+def create_acc_work(request):
+    email = request.POST.get('email')
+    passw = request.POST.get('pass')
+    try:
+        user = authe.create_user_with_email_and_password(email,passw)
+        uid = user['localId']
+        id_token = user['idToken']
+        request.session['uid'] = uid
+        return(redirect("login"))
+    except:
+        errormsg = "There was a problem creating your account."
+        return render(request, "create_account.html",{"message":errormsg})
+    

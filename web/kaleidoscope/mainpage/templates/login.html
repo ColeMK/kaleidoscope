@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            alert('{{ message }}');
+        </script>
+    {% endfor %}
+{% endif %}
+<body>
+    <form action="/signin_wait/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="login-container">
+            <img src="{% static 'Kaleidoscope-nobackground.png' %}" alt="Logo" class="login-logo">
+            <input type="text" name="email" id="email" placeholder="Email" required>
+            <input type="password" name="pass" id="pass" placeholder="Password" required>
+            <div class="login-btn">
+                <button type="submit">Login</button>
+            </div>
+            <p class="no-account-msg">Don't Have an Account? <a href="/create_account">Create an Account</a></p>
+        </div>
+    </form>
+</body>
