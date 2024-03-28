@@ -61,6 +61,7 @@ form {
     align-items: center; /* Added to vertically center items */
     padding: 20 20px; /* Added padding for better appearance */
     width: 100%;
+    overflow: visible;
 }
 
 .topbar a {
@@ -71,7 +72,7 @@ form {
 }
 
 .topbar a:last-child{
-    margin-left: 78%
+    margin-left: auto;
 }
 
 .topbar a:hover{
@@ -115,6 +116,7 @@ form {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: scroll;
 }
 
 .downloads-container a {
@@ -133,21 +135,32 @@ form {
 .login-container {
     position: relative;
     z-index: 1;
-    max-width: 50vw; /* Adjust the max-width to make the container bigger */
+    max-width: 50vw; 
     margin: 0 auto;
     background-color: white;
     padding: 16px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
+.login-container input{
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
 .login-btn{
     display: flex;
-    position: relative;
     justify-content: center;
     width: 100%;
 }
@@ -164,11 +177,23 @@ form {
 }
 
 .login-logo{
-    max-width: 100px; /* Set maximum width for the logo */
-    max-height: 100%; /* Set maximum height for the logo */
-    justify-content: center;
+    max-width: 100px;
+    max-height: 100%;
+    margin-bottom: 2px;
 }
 
 .form-group{
     margin-bottom: 8px;
+}
+
+.no-account-msg{
+    font-size: 12px;
+    color: #b3b3b3;
+    margin: 15px 0 0;
+    font-family: "Roboto", sans-serif;
+}
+
+.no-account-msg a {
+    color: #4CAF50;
+    text-decoration: none;
 }
