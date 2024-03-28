@@ -15,12 +15,13 @@ FROM python:3.10
 
 #Dont really know what this is but needed for network communication
 ENV PYTHONUNBUFFERED 1 
-
-ADD webserver-requirements.txt .
+WORKDIR /app
+COPY webserver-requirements.txt /app/
 RUN pip install -r webserver-requirements.txt
-COPY kaleidoscope .
 
-WORKDIR kaleidoscope
+COPY . /app/
+
+
 #EXPOSE 8000
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:80"] 
 
