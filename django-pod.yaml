@@ -7,6 +7,6 @@ metadata:
 spec:
    containers:
    - name: django-container
-     image: colemk/webserver:1.0
+     image: colemk/webserver:2.0
      ports:
        - containerPort: 80
