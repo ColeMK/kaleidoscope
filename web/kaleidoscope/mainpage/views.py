@@ -32,7 +32,6 @@ def mainpage(request):
         return redirect("login")
     return render(request, 'mainpage.html')
 
-
 def upload_file(request):
     if('uid' not in request.session):
         needslogin = "Error: You Must Be Logged In to Access This Page."
@@ -45,18 +44,16 @@ def upload_file(request):
             file_name = str(request.FILES['file'])[:-4].replace(" ", "_")
             uploaded_video_path = f"{settings.UPLOADS_DIR}{file_name}.mp4"
             stylized_video_path = f"{str(settings.DOWNLOADS_DIR)}{file_name}_{model_path}.mp4"
-            # stylize_video(uploaded_video_path, stylized_video_path, model_path)
-            # ml_thread = threading.Thread(target=stylize_video,args=(uploaded_video_path, stylized_video_path, model_path))
-            # ml_thread.start()  # Start the thread
-            
+
+            ML_type = str(request.POST.get('ML_TYPE'))
+            uid = str(request.session['uid'][0:24])
+            database.child("Queued").push(uid+"&"+file_name+"&"+ML_type)
+            database.child("Downloads").set({uid:{"Video_Name":file_name+"_"+ML_type,"Video_Status":"Queued"}})
+
             return redirect('upload')  # Redirect to a success page
     else:
         form = UploadFileForm()
     return render(request, 'uploader.html', {'form': form})
-
-# def download_file(request):
-#     return render(request,'downloader.html')
-  
 
 def download_file(request, filename):
     if('uid' not in request.session):
