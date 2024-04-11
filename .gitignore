@@ -14,6 +14,10 @@ db.sqlite3
 db.sqlite3-journal
 
 ML/__pycache__
+web/kaleidoscope/kaleidoscope/__pycache__
+web/kaleidoscope/mainpage/__pycache__
+web/kaleidoscope/tests/__pycache__
+web/kaleidoscope/mainpage/migrations/__pycache__
 
 web/kaleidoscope/mainpage/config.py
 

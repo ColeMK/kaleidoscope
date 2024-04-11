@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: machinelearning
+  name: machinelearning
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: machinelearning
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: machinelearning
+    spec:
+      containers:
+        - image: ml
+          name: machinelearning
+          resources: {}
+          volumeMounts:
+            - mountPath: /web/kaleidoscope
+              name: machinelearning-claim0
+      restartPolicy: Always
+      volumes:
+        - name: machinelearning-claim0
+          persistentVolumeClaim:
+            claimName: machinelearning-claim0
+status: {}

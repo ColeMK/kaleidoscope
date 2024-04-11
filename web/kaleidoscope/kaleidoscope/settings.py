@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-$cb^1kcea@80+l0i(5s3olj!w2*31wgkh0p9y0fns2cwh##r03
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 #added this to our allowed hosts to allow docker compose to run it and see it outside
-ALLOWED_HOSTS = ["0.0.0.0","127.0.0.1"]
+ALLOWED_HOSTS = ["0.0.0.0","127.0.0.1", ".us-east-1.elb.amazonaws.com", ".amazonaws.com"]
 
 
 # Application definition
