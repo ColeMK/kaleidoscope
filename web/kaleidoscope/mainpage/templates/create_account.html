@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+{% if message %}
+<script>
+    alert('{{ message }}');
+</script>
+{% endif %}
+<body>
+    <form action="/create_account_work/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="login-container">
+            <img src="{% static 'Kaleidoscope-nobackground.png' %}" alt="Logo" class="login-logo">
+            <input type="text" name="email" id="email" placeholder="Email" required>
+            <input type="password" name="pass" id="pass" placeholder="Password" required>
+            <div class="login-btn">
+                <button type="submit">Sign Up</button>
+            </div>
+        </div>
+    </form>
+</body>

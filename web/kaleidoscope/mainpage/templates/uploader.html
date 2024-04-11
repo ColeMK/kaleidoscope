@@ -9,7 +9,7 @@
 </head>
 <div class="topbar">
   <img src="{% static 'Kaleidoscope-nobackground.png' %}" alt="Logo" class="logo">
-  <a href="/">Home</a>
+  <a href="/mainpage">Home</a>
   <a href="/download">Downloads</a>
   <a href="/logout">Logout</a>
 </div>
@@ -20,6 +20,11 @@
         {{ form.as_p }}
         {% csrf_token %}
       </div>
+      <select id="ML_TYPE" name="ML_TYPE">
+        <option value="hide">-- Select Style --</option>
+        <option value="Vangogh">Vangogh</option>
+        <option value="Other">Other</option>
+      </select>
       <div class="submit-btn">
         <button type="submit">Upload</button>
       </div>
