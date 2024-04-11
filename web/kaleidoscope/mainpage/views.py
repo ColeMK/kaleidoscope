@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.conf import settings
-from django.http import HttpResponse, FileResponse
+from django.http import HttpResponse, FileResponse, JsonResponse
 from django.urls import reverse
 from django.contrib import messages
 import os
@@ -48,7 +48,7 @@ def upload_file(request):
             ML_type = str(request.POST.get('ML_TYPE'))
             uid = str(request.session['uid'][0:24])
             database.child("Queued").push(uid+"&"+file_name+"&"+ML_type)
-            database.child("Downloads").set({uid:{"Video_Name":file_name+"_"+ML_type,"Video_Status":"Queued"}})
+            database.child("Downloads").child(uid).child(file_name+"_"+ML_type).set("QUEUED")
 
             return redirect('upload')  # Redirect to a success page
     else:
@@ -82,6 +82,16 @@ def list_files(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download fil
     files = os.listdir(folder_path)
     context = {'files': files}
     return render(request, 'list_files_downloader.html', context)
+
+# def list_files_json(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download file, we can change if wanted
+#     if('uid' not in request.session):
+#         needslogin = "Error: You Must Be Logged In to Access This Page."
+#         messages.info(request,needslogin)
+#         return redirect("login")
+#     folder_path = str(settings.DOWNLOADS_DIR)
+#     files = os.listdir(folder_path)
+#     context = {'files': files}
+#     return JsonResponse(context)
 
 def logout(request):
     try:

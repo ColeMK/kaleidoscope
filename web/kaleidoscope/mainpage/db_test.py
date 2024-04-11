@@ -18,14 +18,16 @@ database = firebase.database()
 
 # Pop Start
 data = database.child("Queued").order_by_key().limit_to_first(1).get()
-timestamp = data.each()[0].key()
+# timestamp = data.each()[0].key()
 video_values = data.each()[0].val()
-database.child("Queued").child(timestamp).remove()
-# Pop End
+# database.child("Queued").child(timestamp).remove()
+# # Pop End
 
-# Change Video Status start
+# # Change Video Status start
 user_id = video_values.split("&")[0]
-database.child("Downloads").child(uid).child("Video_Status").set("X") # Change X to whatever status
+video_name = video_values.split("&")[1]
+ml_type = video_values.split("&")[2]
+database.child("Downloads").child(user_id).child(video_name+"_"+ml_type).set("Y") # Change X to whatever status
 # Change Video Status end
 
 
