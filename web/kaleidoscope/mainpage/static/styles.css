@@ -197,3 +197,19 @@ form {
     color: #4CAF50;
     text-decoration: none;
 }
+
+.progress-bar {
+    width: 100%;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.progress {
+    height: 20px;
+    background-color: #2196F3;
+    text-align: center;
+    line-height: 20px; /* Vertical centering */
+    color: white;
+    border-radius: 5px;
+}

@@ -46,7 +46,7 @@ def upload_file(request):
             stylized_video_path = f"{str(settings.DOWNLOADS_DIR)}{file_name}_{model_path}.mp4"
 
             ML_type = str(request.POST.get('ML_TYPE'))
-            uid = str(request.session['uid'][0:24])
+            uid = str(request.session['uid'])
             database.child("Queued").push(uid+"&"+file_name+"&"+ML_type)
             database.child("Downloads").child(uid).child(file_name+"_"+ML_type).set("QUEUED")
 
@@ -60,7 +60,6 @@ def download_file(request, filename):
         needslogin = "Error: You Must Be Logged In to Access This Page."
         messages.info(request,needslogin)
         return redirect("login")
-    print(type(settings.DOWNLOADS_DIR))
     folder_path = str(settings.DOWNLOADS_DIR)  # Replace with actual path
     file_path = os.path.join(folder_path, filename)
 
@@ -78,9 +77,12 @@ def list_files(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download fil
         needslogin = "Error: You Must Be Logged In to Access This Page."
         messages.info(request,needslogin)
         return redirect("login")
-    folder_path = str(settings.DOWNLOADS_DIR)
-    files = os.listdir(folder_path)
-    context = {'files': files}
+    uid = request.session['uid']
+    videos = database.child("Downloads").child(uid).get()
+    vid_array = []
+    for video in videos.each():
+        vid_array.append({'name':video.key(),'status':video.val()})
+    context = {'files':vid_array}
     return render(request, 'list_files_downloader.html', context)
 
 # def list_files_json(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download file, we can change if wanted
@@ -114,7 +116,8 @@ def signin_wait(request):
         invalid="Sorry, your credentials could not be matched."
         return render(request,"login.html",{"message":invalid})
 
-    session_id=user['idToken']
+    info = authe.get_account_info(user['idToken'])
+    session_id = info['users'][0]['localId']
     request.session['uid']=str(session_id)
     return redirect("mainpage")
 

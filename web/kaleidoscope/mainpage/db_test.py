@@ -3,6 +3,13 @@ from config import configUtils
 configs = configUtils()
 firebase = pyrebase.initialize_app(configs)
 database = firebase.database()
+authe = firebase.auth()
+
+
+# user = authe.sign_in_with_email_and_password("chise@purdue.edu", "Bb93sbgb")
+# test = authe.get_account_info(user['idToken'])
+# print(test['users'][0]['localId'])
+
 
 
 # database.child("Downloads").set("Test_ID")
@@ -27,7 +34,11 @@ video_values = data.each()[0].val()
 user_id = video_values.split("&")[0]
 video_name = video_values.split("&")[1]
 ml_type = video_values.split("&")[2]
-database.child("Downloads").child(user_id).child(video_name+"_"+ml_type).set("Y") # Change X to whatever status
+database.child("Downloads").child(user_id).child(video_name+"_"+ml_type).set("PROGRESS") # Change X to whatever status
 # Change Video Status end
 
+# videos = database.child("Downloads").child(user_id).get()
 
+# for video in videos.each():
+#     print(video.val())
+#     print(video.key())
