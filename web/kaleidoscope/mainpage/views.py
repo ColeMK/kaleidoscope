@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.conf import settings
-from django.http import HttpResponse, FileResponse
+from django.http import HttpResponse, FileResponse, JsonResponse
 from django.urls import reverse
 from django.contrib import messages
 import os
@@ -32,7 +32,6 @@ def mainpage(request):
         return redirect("login")
     return render(request, 'mainpage.html')
 
-
 def upload_file(request):
     if('uid' not in request.session):
         needslogin = "Error: You Must Be Logged In to Access This Page."
@@ -45,18 +44,16 @@ def upload_file(request):
             file_name = str(request.FILES['file'])[:-4].replace(" ", "_")
             uploaded_video_path = f"{settings.UPLOADS_DIR}{file_name}.mp4"
             stylized_video_path = f"{str(settings.DOWNLOADS_DIR)}{file_name}_{model_path}.mp4"
-            # stylize_video(uploaded_video_path, stylized_video_path, model_path)
-            # ml_thread = threading.Thread(target=stylize_video,args=(uploaded_video_path, stylized_video_path, model_path))
-            # ml_thread.start()  # Start the thread
-            
+
+            ML_type = str(request.POST.get('ML_TYPE'))
+            uid = str(request.session['uid'][0:24])
+            database.child("Queued").push(uid+"&"+file_name+"&"+ML_type)
+            database.child("Downloads").child(uid).child(file_name+"_"+ML_type).set("QUEUED")
+
             return redirect('upload')  # Redirect to a success page
     else:
         form = UploadFileForm()
     return render(request, 'uploader.html', {'form': form})
-
-# def download_file(request):
-#     return render(request,'downloader.html')
-  
 
 def download_file(request, filename):
     if('uid' not in request.session):
@@ -85,6 +82,16 @@ def list_files(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download fil
     files = os.listdir(folder_path)
     context = {'files': files}
     return render(request, 'list_files_downloader.html', context)
+
+# def list_files_json(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download file, we can change if wanted
+#     if('uid' not in request.session):
+#         needslogin = "Error: You Must Be Logged In to Access This Page."
+#         messages.info(request,needslogin)
+#         return redirect("login")
+#     folder_path = str(settings.DOWNLOADS_DIR)
+#     files = os.listdir(folder_path)
+#     context = {'files': files}
+#     return JsonResponse(context)
 
 def logout(request):
     try:

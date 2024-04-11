@@ -20,6 +20,11 @@
         {{ form.as_p }}
         {% csrf_token %}
       </div>
+      <select id="ML_TYPE" name="ML_TYPE">
+        <option value="hide">-- Select Style --</option>
+        <option value="Vangogh">Vangogh</option>
+        <option value="Other">Other</option>
+      </select>
       <div class="submit-btn">
         <button type="submit">Upload</button>
       </div>
