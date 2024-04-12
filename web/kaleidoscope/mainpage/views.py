@@ -85,15 +85,21 @@ def list_files(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download fil
     context = {'files':vid_array}
     return render(request, 'list_files_downloader.html', context)
 
-# def list_files_json(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download file, we can change if wanted
-#     if('uid' not in request.session):
-#         needslogin = "Error: You Must Be Logged In to Access This Page."
-#         messages.info(request,needslogin)
-#         return redirect("login")
-#     folder_path = str(settings.DOWNLOADS_DIR)
-#     files = os.listdir(folder_path)
-#     context = {'files': files}
-#     return JsonResponse(context)
+def list_files_json(request):
+    if('uid' not in request.session):
+        needslogin = "Error: You Must Be Logged In to Access This Page."
+        messages.info(request,needslogin)
+        return redirect("login")
+    uid = request.session['uid']
+    videos = database.child("Downloads").child(uid).get()
+    result = {}
+    result[uid] = {}
+    print(result)
+    for video in videos.each():
+        result[uid].update({video.key():video.val()})
+        # print(result[uid][video.key()])
+    
+    return JsonResponse(result)
 
 def logout(request):
     try:
