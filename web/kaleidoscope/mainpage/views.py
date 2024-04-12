@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.http import HttpResponse, FileResponse, JsonResponse
 from django.urls import reverse
+from django.core.files.storage import default_storage
 from django.contrib import messages
 import os
 from .form import UploadFileForm
@@ -13,6 +14,8 @@ from mainpage import config
 import pyrebase
 
 import sys
+import boto3
+
 sys.path.append('ML/')
 #from process_video import stylize_video
 
@@ -40,14 +43,14 @@ def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()  # Saves the file to the specified upload directory
             file_name = str(request.FILES['file'])[:-4].replace(" ", "_")
-            uploaded_video_path = f"{settings.UPLOADS_DIR}{file_name}.mp4"
-            stylized_video_path = f"{str(settings.DOWNLOADS_DIR)}{file_name}_{model_path}.mp4"
 
             ML_type = str(request.POST.get('ML_TYPE'))
             uid = str(request.session['uid'])
-            database.child("Queued").push(uid+"&"+file_name+"&"+ML_type)
+            queued_name = uid+"&"+file_name+"&"+ML_type
+            default_storage.save('queue/'+queued_name, request.FILES['file'])
+            database.child("Queued").push(queued_name)
+
             database.child("Downloads").child(uid).child(file_name+"_"+ML_type).set("QUEUED")
 
             return redirect('upload')  # Redirect to a success page
@@ -60,17 +63,14 @@ def download_file(request, filename):
         needslogin = "Error: You Must Be Logged In to Access This Page."
         messages.info(request,needslogin)
         return redirect("login")
-    folder_path = str(settings.DOWNLOADS_DIR)  # Replace with actual path
-    file_path = os.path.join(folder_path, filename)
 
-    if os.path.exists(file_path):
-        with open(file_path, 'rb') as f:
-            response = HttpResponse(f, content_type='application/octet-stream') #Need to test for videos too.
-            response['Content-Disposition'] = f'attachment; filename="{filename}"'
-            return response
-    else:
-        # Handle file not found error
-        return HttpResponse("File not found", status=404)
+    path_name = 'downloads/'+str(request.session['uid'])+'/'+filename
+    with default_storage.open(path_name, 'rb') as f:
+
+        response = HttpResponse(f, content_type='application/octet-stream') #Need to test for videos too.
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        return response
+
 
 def list_files(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download file, we can change if wanted
     if('uid' not in request.session):
