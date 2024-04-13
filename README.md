@@ -10,7 +10,7 @@ There are three main components to our project:
   - WebApp
   - Kubernetes
 
-Automated Rotoscoping is effectively an altered version of the CycleGAN repository. We have made three main adjustments. We have introduced a dataloader that scales and preprocesses videos. We have introduced functions that split the video into its component sounds and frames for stylization and then stitch it back together. Lastly, we have introduced a function "stylize_video" that loads in a CycleGAN model with our configuration and then uses our other introductions to automate rotoscoping.  #####TRAIN ON THE VIDEO!!!!!!!!
+Automated Rotoscoping is effectively an altered version of the CycleGAN repository. We have made three main adjustments. We have introduced a dataloader that scales and preprocesses videos. We have introduced functions that split the video into its component sounds and frames for stylization and then stitch it back together. Lastly, we have introduced a function "stylize_video" that loads in a CycleGAN model with our configuration and then uses our other introductions to automate rotoscoping.  
 
 The web app is a Django API. In addition to integration with stylized video, there are three other connections at work: Firebase, s3, and Kubernetes. Firebase is used for authentication and video queueing. s3 stores video and passes it between our Web (the API) and ML instances. Finally, Kubernetes is used to manage the Instances that stylize the actual video. 
 
