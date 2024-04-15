@@ -1,0 +1,43 @@
+############################ EKS STUFF
+Install eksct
+Install kubectl
+# sets up the eksctl cluster 
+eksctl create cluster --name webapp --region us-east-1
+# conencts kubectl to your cluster
+aws eks --region us-east-1 update-kubeconfig --name webapp
+gi
+#to run webapp
+kubectl apply -f django-pod.yaml
+
+#to open its service to access it from ip
+kubectl apply -f django-svc.yaml
+
+#To get information on stuff that is running
+kubectl get all
+
+#To access the command line of a pod
+kubectl exec -it django-pod -- bash
+
+#To delete a pod
+kubectl delete pod <pod name>
+
+# To delete a service
+kubectl delete service <service name>
+
+#delete the cluster off of aws so u dont get charged
+eksctl delete cluster --name <cluster-name>
+
+pod = container
+#############################################
+
+############# DOCKER BUILD AND DOCKER HUB
+#Build the container
+docker build -t <name:tag> . (if u want to build in current directory)
+docker tag <name:tag> <repo_username/name:tag>'
+docker push colemk/ml:1.0
+
+############## LATER RESEARCH
+maybe look into EKS secrets
+
+
+eksctl create iamserviceaccount --name s3-service-account --namespace default --cluster webapp --region=us-east-1 --role-name s3-iam-role --attach-policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess --approve
