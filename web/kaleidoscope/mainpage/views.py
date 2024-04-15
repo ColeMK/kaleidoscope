@@ -51,8 +51,7 @@ def upload_file(request):
             default_storage.save('queue/'+queued_name, request.FILES['file'])
             database.child("Queued").push(queued_name)
 
-            database.child("Downloads").child(uid).child(file_name+"_"+ML_type).set("QUEUED")
-
+            database.child("Downloads").child(uid).child(file_name+"_"+ML_type).set("QUEUED") 
             return redirect('upload')  # Redirect to a success page
     else:
         form = UploadFileForm()
@@ -68,7 +67,7 @@ def download_file(request, filename):
     with default_storage.open(path_name, 'rb') as f:
 
         response = HttpResponse(f, content_type='application/octet-stream') #Need to test for videos too.
-        response['Content-Disposition'] = f'attachment; filename="{filename}"'
+        response['Content-Disposition'] = f'attachment; filename="{filename}.mp4"'
         return response
 
 

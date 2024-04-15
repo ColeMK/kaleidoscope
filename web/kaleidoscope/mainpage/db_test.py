@@ -30,16 +30,22 @@ authe = firebase.auth()
 
 # Pop Start
 data = database.child("Queued").order_by_key().limit_to_first(1).get()
-# timestamp = data.each()[0].key()
+print(data.each())
+timestamp = data.each()[0].key()
 video_values = data.each()[0].val()
-# database.child("Queued").child(timestamp).remove()
+database.child("Queued").child(timestamp).remove()
+print(video_values)
 # # Pop End
 
 # # Change Video Status start
 user_id = video_values.split("&")[0]
-# video_name = video_values.split("&")[1]
-# ml_type = video_values.split("&")[2]
-# database.child("Downloads").child(user_id).child(video_name+"_"+ml_type).set("PROGRESS") # Change X to whatever status
+video_name = video_values.split("&")[1]
+ml_type = video_values.split("&")[2]
+full_video_name = video_name + '_' + ml_type
+print(user_id)
+print(full_video_name)
+print(ml_type)
+database.child("Downloads").child(user_id).child(full_video_name).set("PROGRESS") # Change X to whatever status
 # Change Video Status end
 
 videos = database.child("Downloads").child(user_id).get()
