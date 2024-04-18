@@ -14,7 +14,7 @@ from mainpage import config
 import pyrebase
 
 import sys
-import boto3
+
 
 sys.path.append('ML/')
 #from process_video import stylize_video

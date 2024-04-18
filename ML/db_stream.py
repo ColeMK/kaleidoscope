@@ -24,10 +24,16 @@ upload_folder = "uploads"
 download_folder = "downloads"
 s3_bucket = 'sd-kaleidoscope'
 # Initialize a session using Amazon S3 credentials
+aws_access_key_id = str(os.environ.get('AWS_ACCESS_KEY_ID'))
+aws_secret_access_key = str(os.environ.get('AWS_SECRET_ACCESS_KEY'))
+#
 s3_client = boto3.client(
     's3',
+    aws_access_key_id = aws_access_key_id,
+    aws_secret_access_key =  aws_secret_access_key,
     region_name='us-east-1'
 )
+
 def download_file(bucket_name, s3_file_key, local_file_path):
     """
     Download a file from an S3 bucket.

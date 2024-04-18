@@ -17,6 +17,7 @@ FROM python:3.10
 ENV PYTHONUNBUFFERED 1 
 WORKDIR /app
 COPY webserver-requirements.txt /app/
+RUN pip install --upgrade pip
 RUN pip install -r webserver-requirements.txt
 
 COPY . /app/
