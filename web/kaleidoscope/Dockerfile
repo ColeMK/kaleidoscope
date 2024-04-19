@@ -12,13 +12,18 @@
 # Coles Changes
 
 FROM python:3.10
+#FROM python:2.7
 
 #Dont really know what this is but needed for network communication
 ENV PYTHONUNBUFFERED 1 
 WORKDIR /app
 COPY webserver-requirements.txt /app/
 RUN pip install --upgrade pip
+#RUN pip install 'setuptools<58'
 RUN pip install -r webserver-requirements.txt
+#RUN pip install comtypes
+# RUN pip install requests==2.29.0 
+# RUN pip install pycrypto --upgrade
 
 COPY . /app/
 
