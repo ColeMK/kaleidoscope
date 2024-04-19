@@ -22,3 +22,6 @@ web/kaleidoscope/mainpage/migrations/__pycache__
 web/kaleidoscope/mainpage/config.py
 ML/config.py
 
+django-pod.yaml
+ml-pod.yaml
+aws-secret.yaml
