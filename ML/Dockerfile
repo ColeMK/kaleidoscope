@@ -11,4 +11,4 @@ WORKDIR /ML
 
 #Add command later
 
-CMD ["python3", "checker.py"]
+CMD ["python3", "db_stream.py"]

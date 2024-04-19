@@ -22,6 +22,7 @@ web/kaleidoscope/mainpage/migrations/__pycache__
 web/kaleidoscope/mainpage/config.py
 ML/config.py
 
-django-pod.yaml
-ml-pod.yaml
+# django-pod.yaml
+# ml-pod.yaml
+# Should only need to ignore the secret now
 aws-secret.yaml
