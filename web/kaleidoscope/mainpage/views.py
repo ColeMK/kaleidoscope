@@ -15,6 +15,7 @@ import pyrebase
 
 import sys
 import boto3
+import time
 
 sys.path.append('ML/')
 #from process_video import stylize_video
@@ -33,7 +34,12 @@ def mainpage(request):
         needslogin = "Error: You Must Be Logged In to Access This Page."
         messages.info(request,needslogin)
         return redirect("login")
-    return render(request, 'mainpage.html')
+    if('response_time' not in request.session):
+        response_time = time.time()-request.session['start_time']
+        request.session['response_time'] = response_time
+    else:
+        response_time = request.session['response_time']
+    return render(request, 'mainpage.html',{'response_time':response_time})
 
 def upload_file(request):
     if('uid' not in request.session):
@@ -96,8 +102,6 @@ def list_files_json(request):
     print(result)
     for video in videos.each():
         result[uid].update({video.key():video.val()})
-        # print(result[uid][video.key()])
-    
     return JsonResponse(result)
 
 def logout(request):
@@ -121,9 +125,12 @@ def signin_wait(request):
         invalid="Sorry, your credentials could not be matched."
         return render(request,"login.html",{"message":invalid})
 
-    info = authe.get_account_info(user['idToken'])
+    token = user['idToken']
+    info = authe.get_account_info(token)
     session_id = info['users'][0]['localId']
     request.session['uid']=str(session_id)
+    request.session['idToken'] = token
+    request.session['start_time'] = time.time()
     return redirect("mainpage")
 
 def create_acc_page(request):
@@ -137,6 +144,7 @@ def create_acc_work(request):
         uid = user['localId']
         id_token = user['idToken']
         request.session['uid'] = uid
+        request.session['idToken'] = id_token
         return(redirect("login"))
     except:
         errormsg = "There was a problem creating your account."
