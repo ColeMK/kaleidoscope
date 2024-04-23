@@ -213,3 +213,12 @@ form {
     color: white;
     border-radius: 5px;
 }
+
+.timer{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    color: rgba(255, 197, 5, 0.884)
+}

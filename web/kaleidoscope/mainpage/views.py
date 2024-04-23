@@ -35,7 +35,7 @@ def mainpage(request):
         messages.info(request,needslogin)
         return redirect("login")
     if('response_time' not in request.session):
-        response_time = time.time()-request.session['start_time']
+        response_time = round(time.time()-request.session['start_time'],3)
         request.session['response_time'] = response_time
     else:
         response_time = request.session['response_time']
@@ -49,6 +49,11 @@ def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
+            file_type = str(request.FILES['file'])[:4]
+            if(file_type !=".mp4"):
+                invalid_file_type = "ERROR: Invalid File Type, please submit a .mp4 file."
+                messages.info(request,invalid_file_type)
+                return redirect("upload")
             file_name = str(request.FILES['file'])[:-4].replace(" ", "_")
 
             ML_type = str(request.POST.get('ML_TYPE'))
@@ -71,7 +76,6 @@ def download_file(request, filename):
 
     path_name = 'downloads/'+str(request.session['uid'])+'/'+filename
     with default_storage.open(path_name, 'rb') as f:
-
         response = HttpResponse(f, content_type='application/octet-stream') #Need to test for videos too.
         response['Content-Disposition'] = f'attachment; filename="{filename}.mp4"'
         return response
@@ -107,6 +111,9 @@ def list_files_json(request):
 def logout(request):
     try:
         del request.session['uid']
+        del request.session['start_time']
+        del request.session['idToken']
+        del request.session['response_time']
         logoutmessage = "You Have Logged Out."
     except:
         logoutmessage = "ERROR: There was an issue with your logout."
@@ -123,7 +130,8 @@ def signin_wait(request):
         user=authe.sign_in_with_email_and_password(email,passw)
     except:
         invalid="Sorry, your credentials could not be matched."
-        return render(request,"login.html",{"message":invalid})
+        messages.info(request,invalid)
+        return redirect("login")
 
     token = user['idToken']
     info = authe.get_account_info(token)
@@ -148,5 +156,6 @@ def create_acc_work(request):
         return(redirect("login"))
     except:
         errormsg = "There was a problem creating your account."
-        return render(request, "create_account.html",{"message":errormsg})
+        messages.info(request,errormsg)
+        return redirect("create_account")
     
