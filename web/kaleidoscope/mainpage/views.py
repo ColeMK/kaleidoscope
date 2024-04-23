@@ -49,7 +49,7 @@ def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            file_type = str(request.FILES['file'])[:4]
+            file_type = str(request.FILES['file'])[-4:]
             if(file_type !=".mp4"):
                 invalid_file_type = "ERROR: Invalid File Type, please submit a .mp4 file."
                 messages.info(request,invalid_file_type)
@@ -89,9 +89,12 @@ def list_files(request): # THIS IS THE MAIN VIEW OF DOWNLOADS calls download fil
     uid = request.session['uid']
     videos = database.child("Downloads").child(uid).get()
     vid_array = []
-    for video in videos.each():
-        vid_array.append({'name':video.key(),'status':video.val()})
-    context = {'files':vid_array}
+    if(videos.each()==None):
+        context = {'has_videos':"false"}
+    else:
+        for video in videos.each():
+            vid_array.append({'name':video.key(),'status':video.val()})
+        context = {'has_videos':"true",'files':vid_array}
     return render(request, 'list_files_downloader.html', context)
 
 def list_files_json(request):
@@ -155,7 +158,7 @@ def create_acc_work(request):
         request.session['idToken'] = id_token
         return(redirect("login"))
     except:
-        errormsg = "There was a problem creating your account."
+        errormsg = "There was a problem creating your account. Please ensure that your password is 6 characters long, and that you have entered a valid email."
         messages.info(request,errormsg)
         return redirect("create_account")
     

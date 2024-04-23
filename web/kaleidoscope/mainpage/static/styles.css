@@ -80,6 +80,25 @@ form {
     color: #000000;
 }
 
+.topbar .redirect-box {
+    color: white;
+    text-decoration: none;
+    margin-right: 10px; /* Adjust spacing between items */
+    margin-left: 5px;
+    transition: background-color 0.3s ease; /* Add transition effect for smoother color change */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+
+.topbar .redirect-box:hover {
+    background-color: #287cb4; /* Change background color on hover */
+    color: white; /* Change text color on hover */
+}
+
 .logo {
     margin-right: 10px; /* Adjust spacing between logo and links */
     max-width: 100px; /* Set maximum width for the logo */

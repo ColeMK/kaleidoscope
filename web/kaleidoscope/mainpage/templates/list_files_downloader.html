@@ -15,29 +15,33 @@
 </div>
 <body>
     <div class="downloads-container">
-        Your Video Collection:
-        {% for file in files %}
-            {%if file.status == "DONE" %}
-                <a href="{% url 'download_file' file.name %}" download>{{ file.name }} </a>
-            {% else %}
-                <div class="downloads-no-click">{{ file.name }}</div>
-            {% endif %}
-            {% if file.status == "QUEUED" %}
-                <div class="progress-bar">
-                    <div class="progress" style="width:33%;">Queued</div>
-                </div>
-            {% endif %}
-            {% if file.status == "PROCESSING" %}
-                <div class="progress-bar">
-                    <div class="progress" style="width:66%;">In Progress</div>
-                </div>
-            {% endif %}
-            {% if file.status == "DONE" %}
-                <div class="progress-bar">
-                    <div class="progress" style="width:100%;">Video is Ready</div>
-                </div>
-            {% endif %}
-        <br>
-        {% endfor %}
+        {% if has_videos == "true"%}
+            Your Video Collection:
+            {% for file in files %}
+                {%if file.status == "DONE" %}
+                    <a href="{% url 'download_file' file.name %}" download>{{ file.name }} </a>
+                {% else %}
+                    <div class="downloads-no-click">{{ file.name }}</div>
+                {% endif %}
+                {% if file.status == "QUEUED" %}
+                    <div class="progress-bar">
+                        <div class="progress" style="width:33%;">Queued</div>
+                    </div>
+                {% endif %}
+                {% if file.status == "PROCESSING" %}
+                    <div class="progress-bar">
+                        <div class="progress" style="width:66%;">In Progress</div>
+                    </div>
+                {% endif %}
+                {% if file.status == "DONE" %}
+                    <div class="progress-bar">
+                        <div class="progress" style="width:100%;">Video is Ready</div>
+                    </div>
+                {% endif %}
+            <br>
+            {% endfor %}
+        {% else %}
+            <div>You currently have no videos. Please visit<a href="/upload">Uploads</a>to begin.</div>
+        {% endif %}
     </div>
 </body>
