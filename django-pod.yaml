@@ -1,3 +1,4 @@
+#pod for our webapp
 apiVersion: v1
 kind: Pod
 metadata:
