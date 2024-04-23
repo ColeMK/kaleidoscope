@@ -7,6 +7,18 @@ metadata:
 spec:
    containers:
    - name: ml-container
-     image: colemk/ml:1.0
+     image: colemk/ml:2.0
    #   ports:
    #     - containerPort: 80
+   env:
+       # Define environment variables to use AWS credentials
+       - name: AWS_ACCESS_KEY_ID
+       valueFrom:
+          secretKeyRef:
+             name: aws-secret   # Name of your Kubernetes secret
+             key: AWS_ACCESS_KEY_ID
+       - name: AWS_SECRET_ACCESS_KEY
+       valueFrom:
+          secretKeyRef:
+             name: aws-secret   # Name of your Kubernetes secret
+             key: AWS_SECRET_ACCESS_KEY
