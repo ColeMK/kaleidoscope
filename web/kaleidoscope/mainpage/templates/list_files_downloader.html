@@ -17,7 +17,11 @@
     <div class="downloads-container">
         Your Video Collection:
         {% for file in files %}
-        <a href="{% url 'download_file' file.name %}" download>{{ file.name }} </a>
+            {%if file.status == "DONE" %}
+                <a href="{% url 'download_file' file.name %}" download>{{ file.name }} </a>
+            {% else %}
+                <div class="downloads-no-click">{{ file.name }}</div>
+            {% endif %}
             {% if file.status == "QUEUED" %}
                 <div class="progress-bar">
                     <div class="progress" style="width:33%;">Queued</div>
