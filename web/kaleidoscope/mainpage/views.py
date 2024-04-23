@@ -50,8 +50,8 @@ def upload_file(request):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             file_type = str(request.FILES['file'])[-4:]
-            if(file_type !=".mp4"):
-                invalid_file_type = "ERROR: Invalid File Type, please submit a .mp4 file."
+            if(file_type != ".mp4" and file_type != ".mov" and file_type != ".MOV" and file_type != ".MP4"):
+                invalid_file_type = "ERROR: Invalid File Type, please submit an mp4 or mov file."
                 messages.info(request,invalid_file_type)
                 return redirect("upload")
             file_name = str(request.FILES['file'])[:-4].replace(" ", "_")
