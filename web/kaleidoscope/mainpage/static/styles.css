@@ -91,8 +91,8 @@ form {
     justify-content: center;
     text-align: center;
     align-items: center;
+    flex-grow: .01;
 }
-
 
 .topbar .redirect-box:hover {
     background-color: #287cb4; /* Change background color on hover */
