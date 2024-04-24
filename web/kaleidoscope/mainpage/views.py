@@ -161,6 +161,8 @@ def create_acc_work(request):
         id_token = user['idToken']
         request.session['uid'] = uid
         request.session['idToken'] = id_token
+        successmsg = "Success. Your account has successfully been created."
+        messages.info(request,successmsg)
         return(redirect("login"))
     except:
         errormsg = "There was a problem creating your account. Please ensure that your password is 6 characters long, and that you have entered a valid email."
