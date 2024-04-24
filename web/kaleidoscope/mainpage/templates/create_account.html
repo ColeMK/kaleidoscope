@@ -7,10 +7,12 @@
     <title>Create Account</title>
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
 </head>
-{% if message %}
-<script>
-    alert('{{ message }}');
-</script>
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            alert('{{ message }}');
+        </script>
+    {% endfor %}
 {% endif %}
 <body>
     <form action="/create_account_work/" method="post" enctype="multipart/form-data">

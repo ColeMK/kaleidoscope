@@ -1,12 +1,14 @@
-import pyrebase
-from config import configUtils
+import time
 import requests
 
-configs = configUtils()
-firebase = pyrebase.initialize_app(configs)
-database = firebase.database()
+start = time.time()
+request = requests.get("http://127.0.0.1:8000/mainpage")
 
-database.child("Downloads").child("TEST_ID").set({"TEST_VIDEO":"QUEUED"})
+response_time = time.time()-start
+size = len(request.content)
+mbs = size/response_time
+response_time *= 100
+print(response_time,"ms")
+print(mbs,"mB/s")
 
-response = requests.get("http://127.0.0.1:8000/list_files/",params={'uid':"TEST_ID"})
-print(response.text)
+

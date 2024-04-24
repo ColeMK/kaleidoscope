@@ -73,10 +73,30 @@ form {
 
 .topbar a:last-child{
     margin-left: auto;
+    margin-right: 30px;
 }
 
 .topbar a:hover{
     color: #000000;
+}
+
+.topbar .redirect-box {
+    color: white;
+    text-decoration: none;
+    margin-right: 10px; /* Adjust spacing between items */
+    margin-left: 5px;
+    transition: background-color 0.3s ease; /* Add transition effect for smoother color change */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    flex-grow: .01;
+}
+
+.topbar .redirect-box:hover {
+    background-color: #287cb4; /* Change background color on hover */
+    color: white; /* Change text color on hover */
 }
 
 .logo {
@@ -100,6 +120,36 @@ form {
 .submit-btn {
     display: flex;
     justify-content: center;
+}
+
+.submit-btn button{
+    padding: 10px 20px; /* Add padding */
+    background-color: #007bff; /* Set background color */
+    color: #fff; /* Set text color */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Add border radius */
+    cursor: pointer; /* Show pointer cursor on hover */
+}
+
+.submit-btn button:hover{
+    background-color: #0056b3;
+}
+
+.upload-selection{
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.upload-selection select{
+  width: 100%;
+  padding: 10px 20px; /* Adjust padding as needed */
+  font-size: 16px; /* Adjust font size as needed */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Add border radius */
+  background-color: #fff; /* Set background color */
+  color: #333; /* Set text color */
+  cursor: pointer; /* Show pointer cursor on hover */
+  text-align: justify;
 }
 
 .downloads-container {
@@ -131,6 +181,11 @@ form {
     text-decoration: underline;
 }
 
+.downloads-no-click{
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: rgba(0, 0, 0, 0.5)
+}
 
 .login-container {
     position: relative;
@@ -173,7 +228,8 @@ form {
 }
 
 .login-btn button:hover{
-    background: #285a29;
+    background: #367a37;
+    cursor: pointer;
 }
 
 .login-logo{
@@ -202,7 +258,7 @@ form {
     width: 100%;
     background-color: #f3f3f3;
     border-radius: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .progress {
@@ -213,3 +269,13 @@ form {
     color: white;
     border-radius: 5px;
 }
+
+.timer{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    color: rgba(255, 197, 5, 0.884)
+}
+

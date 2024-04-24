@@ -7,29 +7,49 @@
     <title>Upload Page</title>
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
 </head>
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            alert('{{ message }}');
+        </script>
+    {% endfor %}
+{% endif %}
 <div class="topbar">
   <img src="{% static 'Kaleidoscope-nobackground.png' %}" alt="Logo" class="logo">
-  <a href="/mainpage">Home</a>
-  <a href="/download">Downloads</a>
-  <a href="/logout">Logout</a>
+  <a href="/mainpage" class="redirect-box"> Home </a>
+  <a href="/download" class="redirect-box"> Downloads </a>
+  <a href="/logout" class="redirect-box"> Logout </a>
 </div>
 <body>
-  <form method="post" enctype="multipart/form-data">
+  <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
     <div class="uploads-container">
       <div class="upload-submit">
         {{ form.as_p }}
         {% csrf_token %}
       </div>
-      <select id="ML_TYPE" name="ML_TYPE">
-        <option value="hide">-- Select Style --</option>
-        <option value="Vangogh">Vangogh</option>
-        <option value="Other">Other</option>
-      </select>
+      <div class="upload-selection">
+        <select id="ML_TYPE" name="ML_TYPE">
+          <option value="" selected>-- Select Style --</option>
+          <option value="Vangogh">Vangogh</option>
+          <option value="Monet">Monet</option>
+          <option value="Ukiyoe">Ukiyoe</option>
+        </select>
+      </div>
       <div class="submit-btn">
         <button type="submit">Upload</button>
       </div>
     </div>
   </form>
+  <script>
+    function validateForm() {
+        var selectedOption = document.getElementById("ML_TYPE").value;
+        if (selectedOption == "") {
+            alert("Please select a style.");
+            return false;
+        }
+        return true;
+    }
+  </script>
 </body>
 
 

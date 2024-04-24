@@ -1,12 +1,25 @@
+#pod for our webapp
 apiVersion: v1
 kind: Pod
 metadata:
-   name: django-pod
-   labels:
-      app: django-ws
+  name: django-pod
+  labels:
+    app: django-ws
 spec:
-   containers:
-   - name: django-container
-     image: colemk/webserver:2.0
-     ports:
-       - containerPort: 80
+  containers:
+  - name: django-container
+    image: colemk/webserver:2.0
+    ports:
+    - containerPort: 80
+    env:
+      # Define environment variables to use AWS credentials
+      - name: AWS_ACCESS_KEY_ID
+        valueFrom:
+          secretKeyRef:
+            name: aws-secret   # Name of your Kubernetes secret
+            key: AWS_ACCESS_KEY_ID
+      - name: AWS_SECRET_ACCESS_KEY
+        valueFrom:
+          secretKeyRef:
+            name: aws-secret  # Name of your Kubernetes secret
+            key: AWS_SECRET_ACCESS_KEY
