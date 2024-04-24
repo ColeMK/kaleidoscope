@@ -36,7 +36,7 @@
         </select>
       </div>
       <div class="submit-btn">
-        <button type="submit">Upload</button>
+        <button id="upload-btn" type="submit" onclick=diableButton()>Upload</button>
       </div>
     </div>
   </form>
@@ -48,6 +48,10 @@
             return false;
         }
         return true;
+    }
+
+    function disableButton(){
+      document.getElementById("upload-btn").disabled = true;
     }
   </script>
 </body>
