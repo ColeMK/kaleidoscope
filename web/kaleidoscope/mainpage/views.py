@@ -59,11 +59,16 @@ def upload_file(request):
             ML_type = str(request.POST.get('ML_TYPE'))
             uid = str(request.session['uid'])
             queued_name = uid+"&"+file_name+"&"+ML_type
-            default_storage.save('queue/'+queued_name, request.FILES['file'])
-            database.child("Queued").push(queued_name)
+            if request.FILES['file'].size < 20*1000000:
+                default_storage.save('queue/'+queued_name, request.FILES['file'])
+                database.child("Queued").push(queued_name)
 
-            database.child("Downloads").child(uid).child(file_name+"_"+ML_type).set("QUEUED") 
-            return redirect('upload')  # Redirect to a success page
+                database.child("Downloads").child(uid).child(file_name+"_"+ML_type).set("QUEUED") 
+                return redirect('upload')  # Redirect to a success page
+            else:
+                invalid_file_type = "File Size too large!"
+                messages.info(request,invalid_file_type)
+                return redirect("upload")
     else:
         form = UploadFileForm()
     return render(request, 'uploader.html', {'form': form})
