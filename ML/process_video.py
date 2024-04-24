@@ -174,8 +174,8 @@ def load_config(config_path):
     return config
 
 if __name__ == "__main__":
-    style = "style_ukiyoe_pretrained"
-    video_path = r"C:\Users\wston\Desktop\Purdue\SeniorDesign\kaleidoscope\whale.mp4"
+    style = "style_vangogh_pretrained"
+    video_path = r"C:\Users\wston\Desktop\Purdue\SeniorDesign\kaleidoscope\switzerland.mp4"
     stylized_video_path = "stylizedtest.mp4"
     
     stylize_video(video_path, stylized_video_path, style)
