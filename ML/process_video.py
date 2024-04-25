@@ -124,7 +124,7 @@ def sew_video(stylized_folder, audio_path, fps, stylized_video_path):
     print(video_clip.duration, audio_clip.duration)
 
     # Write the result to a file
-    video_with_audio.write_videofile(stylized_video_path)
+    video_with_audio.write_videofile(stylized_video_path, codec = 'mpeg4')
 
 def stylize_video(video_path, stylized_video_path, style):
     video_folder = video_path[:-4] + "_" + style
@@ -174,9 +174,10 @@ def load_config(config_path):
     return config
 
 if __name__ == "__main__":
-    style = "style_vangogh_pretrained"
-    video_path = r"C:\Users\wston\Desktop\Purdue\SeniorDesign\kaleidoscope\switzerland.mp4"
-    stylized_video_path = "stylizedtest.mp4"
+    # style = "style_vangogh_pretrained"
+    # video_path = r"C:\Users\wston\Desktop\Purdue\SeniorDesign\kaleidoscope\switzerland.mp4"
+    # stylized_video_path = "stylizedtest.mp4"
     
-    stylize_video(video_path, stylized_video_path, style)
+    # stylize_video(video_path, stylized_video_path, style)
+    pass
     

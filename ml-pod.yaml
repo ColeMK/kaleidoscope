@@ -8,6 +8,7 @@ spec:
   containers:
   - name: ml-container
     image: colemk/ml:2.0
+    imagePullPolicy: Always
 
     env:
       # Define environment variables to use AWS credentials

@@ -7,7 +7,7 @@ metadata:
       service.beta.kubernetes.io/aws-load-balancer-type: nlb
       # Need to have allocated ips need 2 of them for our 1 zone
       # Do not put a space after comma I learned the hard way
-      service.beta.kubernetes.io/aws-load-balancer-eip-allocations: eipalloc-086e597ddd60f2857,eipalloc-00e2d2bbdb5f73f01
+      service.beta.kubernetes.io/aws-load-balancer-eip-allocations: eipalloc-0c1c1429ecb470d82,eipalloc-086e597ddd60f2857
 
 
 
