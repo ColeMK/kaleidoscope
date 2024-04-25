@@ -18,7 +18,7 @@ def get_basename_no_extension(file_path):
     file_name_without_extension, _ = os.path.splitext(base_name)
     return file_name_without_extension
 
-def split_video(video_path, video_folder):
+def split_video(video_path, video_folder, opt):
     """
     Split a video into frames and save them in the specified output folder.
 
@@ -44,6 +44,7 @@ def split_video(video_path, video_folder):
     print(video_path)
     cap = cv2.VideoCapture(video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
+    opt.aspect_ratio = cap.get(cv2.CAP_PROP_FRAME_HEIGHT) / cap.get(cv2.CAP_PROP_FRAME_WIDTH) 
 
     if not cap.isOpened():
         print("Error: Could not open video.")
@@ -123,7 +124,7 @@ def sew_video(stylized_folder, audio_path, fps, stylized_video_path):
     print(video_clip.duration, audio_clip.duration)
 
     # Write the result to a file
-    video_with_audio.write_videofile(stylized_video_path)
+    video_with_audio.write_videofile(stylized_video_path, codec = 'mpeg4')
 
 def stylize_video(video_path, stylized_video_path, style):
     video_folder = video_path[:-4] + "_" + style
@@ -133,7 +134,7 @@ def stylize_video(video_path, stylized_video_path, style):
     opt.name = style 
 
     try:
-        original_folder, stylized_folder, sound_path, fps = split_video(video_path, video_folder)
+        original_folder, stylized_folder, sound_path, fps = split_video(video_path, video_folder, opt)
     except Exception:
         print(f"Error spliting video at {video_path}")
         raise Exception
@@ -173,8 +174,10 @@ def load_config(config_path):
     return config
 
 if __name__ == "__main__":
-    style = "style_monet_pretrained"
-    video_path = "/home/jwstoneb/kaleidoscope/Video_Transformation/Model/datasets/video/zoolander.mp4"
+    # style = "style_vangogh_pretrained"
+    # video_path = r"C:\Users\wston\Desktop\Purdue\SeniorDesign\kaleidoscope\switzerland.mp4"
+    # stylized_video_path = "stylizedtest.mp4"
     
-    stylize_video(video_path, style)
+    # stylize_video(video_path, stylized_video_path, style)
+    pass
     

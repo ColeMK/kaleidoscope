@@ -9,15 +9,39 @@
 </head>
 <div class="topbar">
     <img src="{% static 'Kaleidoscope-nobackground.png' %}" alt="Logo" class="logo">
-    <a href="/mainpage">Home</a>
-    <a href="/upload">Upload</a>
-    <a href="/logout">Logout</a>
+    <a href="/mainpage" class="redirect-box"> Home </a>
+    <a href="/upload" class="redirect-box"> Upload </a>
+    <a href="/logout" class="redirect-box"> Logout </a>
 </div>
 <body>
     <div class="downloads-container">
-        Your Video Collection:
-        {% for file in files %}
-        <a href="{% url 'download_file' file %}" download>{{ file }}</a><br>
-        {% endfor %}
+        {% if has_videos == "true"%}
+            Your Video Collection:
+            {% for file in files %}
+                {%if file.status == "DONE" %}
+                    <a href="{% url 'download_file' file.name %}" download>{{ file.name }} </a>
+                {% else %}
+                    <div class="downloads-no-click">{{ file.name }}</div>
+                {% endif %}
+                {% if file.status == "QUEUED" %}
+                    <div class="progress-bar">
+                        <div class="progress" style="width:33%;">Queued</div>
+                    </div>
+                {% endif %}
+                {% if file.status == "PROCESSING" %}
+                    <div class="progress-bar">
+                        <div class="progress" style="width:66%;">In Progress</div>
+                    </div>
+                {% endif %}
+                {% if file.status == "DONE" %}
+                    <div class="progress-bar">
+                        <div class="progress" style="width:100%;">Video is Ready</div>
+                    </div>
+                {% endif %}
+            <br>
+            {% endfor %}
+        {% else %}
+            <div>You currently have no videos. Please visit<a href="/upload">Uploads</a>to begin.</div>
+        {% endif %}
     </div>
 </body>

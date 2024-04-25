@@ -11,6 +11,16 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+#S3
+# AWS_ACCESS_KEY_ID = 'your-access-key'
+# AWS_SECRET_ACCESS_KEY = 'your-secret-key'
+AWS_STORAGE_BUCKET_NAME = 'sd-kaleidoscope'
+AWS_S3_REGION_NAME = 'us-east-1'  # e.g., 'us-east-1'
+AWS_ACCESS_KEY_ID = str(os.environ.get('AWS_ACCESS_KEY_ID'))
+AWS_SECRET_ACCESS_KEY = str(os.environ.get('AWS_SECRET_ACCESS_KEY'))
+#
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainpage',
+    "storages",
 ]
 
 MIDDLEWARE = [

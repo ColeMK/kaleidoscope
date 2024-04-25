@@ -1,0 +1,2 @@
+Downloads folder for processed videos
+Should be cleared upon upload to S3

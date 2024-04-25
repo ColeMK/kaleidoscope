@@ -1,0 +1,2 @@
+This is the uploads folder. 
+Should be emptied once video is processed.
